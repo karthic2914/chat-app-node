@@ -2,14 +2,15 @@ const path = require('path');
 const http = require('http');
 const publicPath = path.join(__dirname,'../public');
 const port = process.env.PORT || 3000;
+
 //call express
 const express = require('express');
 //socket io
 const socketIO = require('socket.io');
+const {generateMessage} = require('./utils/message');
+
 const app = express();
 app.use(express.static(publicPath));
-
-
 
 //use http
 const server = http.createServer(app);
@@ -26,17 +27,9 @@ io.on('connection',(socket)=>{
     console.log('Disconnected from Client');
   });
   //socket.emit is  single connection
-  socket.emit('newMessage',{
-    from:'Admin',
-    text:'Wecome to Chat App',
-    createAt:new Date().getTime()
-  });
+  socket.emit('newMessage',generateMessage('Admin','Wecome to Chat App'));
   //socket.broadcast.emit from admin text new user joined
-  socket.broadcast.emit('newMessage',{
-    from:'Admin',
-    text:'New User Joined',
-    createAt:new Date().getTime()
-  });
+  socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
   // socket.emit('newEmail',{
   //   from:'mahadevan_k@hcl.com',
   //   text:'Hi This is mahadevan',
@@ -49,11 +42,7 @@ io.on('connection',(socket)=>{
   socket.on('createMessage', (message)=>{
     console.log('createMessage',message);
     //will emit every to every single connectin
-    io.emit('newMessage',{
-      from:Admin,
-      text:message.text,
-      createdAt: new Date().getTime()
-    })
+    io.emit('newMessage',generateMessage(message.from, message.text))
     //broadcast where every one will get message there are two arg first is event name and second one is object
 
     // socket.broadcast.emit('newMessage',{
