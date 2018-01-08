@@ -31,6 +31,7 @@ io.on('connection',(socket)=>{
   //   text:'Hi This is mahadevan',
   //   createAt:123
   // });
+  //socket.emit is  single connection
 socket.emit('newMessage',{
   from:'Vidya',
   text:'I love you'
@@ -40,7 +41,15 @@ socket.emit('newMessage',{
   // });
   socket.on('createMessage', (message)=>{
     console.log('createMessage',message);
+    //will emit every to every single connectin
+    io.emit('newMessage',{
+      from:message.from,
+      text:message.text,
+      createdAt: new Date().getTime()
+    })
   })
+
+
 });
 
 //server listen (emit)
