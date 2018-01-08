@@ -19,23 +19,30 @@ const io = socketIO(server);
 //on method is register the an event listener using arrow fuction (Call back)
 io.on('connection',(socket)=>{
   console.log('New user connected');
-
   socket.on('connect', () =>{
     console.log('Connected to Client');
   });
   socket.on('disconnect', () =>{
     console.log('Disconnected from Client');
   });
+  //socket.emit is  single connection
+  socket.emit('newMessage',{
+    from:'Admin',
+    text:'Wecome to Chat App',
+    createAt:new Date().getTime()
+  });
+  //socket.broadcast.emit from admin text new user joined
+  socket.broadcast.emit('newMessage',{
+    from:'Admin',
+    text:'New User Joined',
+    createAt:new Date().getTime()
+  });
   // socket.emit('newEmail',{
   //   from:'mahadevan_k@hcl.com',
   //   text:'Hi This is mahadevan',
   //   createAt:123
   // });
-  //socket.emit is  single connection
-socket.emit('newMessage',{
-  from:'Vidya',
-  text:'I love you'
-})
+
   // socket.on('createEmail', (newEmail)=>{
   //   console.log('createEmail', newEmail);
   // });
@@ -43,11 +50,19 @@ socket.emit('newMessage',{
     console.log('createMessage',message);
     //will emit every to every single connectin
     io.emit('newMessage',{
-      from:message.from,
+      from:Admin,
       text:message.text,
       createdAt: new Date().getTime()
     })
-  })
+    //broadcast where every one will get message there are two arg first is event name and second one is object
+
+    // socket.broadcast.emit('newMessage',{
+    //      from:message.from,
+    //      text:message.text,
+    //      createdAt: new Date().getTime()
+    // })
+  });
+
 
 
 });
