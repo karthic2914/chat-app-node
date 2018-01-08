@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const express = require('express');
 //socket io
 const socketIO = require('socket.io');
-const {generateMessage} = require('./utils/message');
+const {generateMessage} = require('./utils/message' );
 
 const app = express();
 app.use(express.static(publicPath));
@@ -27,7 +27,7 @@ io.on('connection',(socket)=>{
     console.log('Disconnected from Client');
   });
   //socket.emit is  single connection
-  socket.emit('newMessage',generateMessage('Admin','Wecome to Chat App'));
+  socket.emit('newMessage',generateMessage('Admin','Welcome to Chat App'));
   //socket.broadcast.emit from admin text new user joined
   socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
   // socket.emit('newEmail',{
@@ -39,10 +39,11 @@ io.on('connection',(socket)=>{
   // socket.on('createEmail', (newEmail)=>{
   //   console.log('createEmail', newEmail);
   // });
-  socket.on('createMessage', (message)=>{
+  socket.on('createMessage', (message , callback)=>{
     console.log('createMessage',message);
     //will emit every to every single connectin
-    io.emit('newMessage',generateMessage(message.from, message.text))
+    io.emit('newMessage',generateMessage(message.from, message.text));
+    callback('This is from Server');
     //broadcast where every one will get message there are two arg first is event name and second one is object
 
     // socket.broadcast.emit('newMessage',{

@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Chat </title>
 <!--  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">-->
+
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
@@ -18,9 +20,28 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <ol id="messages">
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="" id="message-form">
+        <div class="form-group">
+          <label for="Enter Message">Enter Message</label>
+          <input type="text" name="message" class="" value="" placeholder="Message">
+          <button type="submit" name="button" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 </div>
 <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+<script src="/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="/js/index.js" charset="utf-8"></script>
+
 </body>
 </html>
