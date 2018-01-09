@@ -7,39 +7,49 @@
   <title>Chat </title>
 <!--  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">-->
 
-
+<link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Open+Sans+Condensed:700" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="jumbotron">
-        <h1>Hello, world!</h1>
-        <p>Say Hi to Chat</p>
+  <div  class="rightbg">
+      <div class="container-fluid">
+          <div class="row">
+              <div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <ol id="messages">
+                        </ol>
+                      </div>
+                    </div>
+                    <div class="row form-cl" >
+                      <div class="col-xs-12">
+                        <div class="row">
+                        <form action="" id="message-form">
+                          <div class="form-group">
+                            <div class="col-xs-10 col-xs-10">
+                              <input type="text" name="message" class="form-control input-normal" value="" placeholder="Enter Message" autofocus autocomplete="off">
+                            </div>
+                            <div class="col-xs-2 pull-left">
+                              <button type="submit" name="button" class="btn btn-primary">Send</button>
+                              <button type="button" name="button" id="send-locate" class="btn btn-primary">Send location</button>
+                            </div>
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 leftbg">
+                        <p class="list-user">List of User</p>
+                  </div>
+              </div>
+          </div>
+          <!--  .row -->
       </div>
-    </div>
+      <!--  .container-fluid -->
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <ol id="messages">
-      </ol>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <form action="" id="message-form">
-        <div class="form-group">
-          <label for="Enter Message">Enter Message</label>
-          <input type="text" name="message" class="" value="" placeholder="Message">
-          <button type="submit" name="button" class="btn btn-primary">Send</button>
-          <button type="button" name="button" id="send-locate" class="btn btn-primary">Send Location</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-</div>
 <script src="/socket.io/socket.io.js" charset="utf-8"></script>
 <script src="/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="/js/index.js" charset="utf-8"></script>

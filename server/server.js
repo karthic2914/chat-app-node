@@ -27,9 +27,9 @@ io.on('connection',(socket)=>{
     console.log('Disconnected from Client');
   });
   //socket.emit is  single connection
-  socket.emit('newMessage',generateMessage('Admin','Welcome to Chat App'));
+  socket.emit('newMessage',generateMessage('Admin ','Welcome to Chat App'));
   //socket.broadcast.emit from admin text new user joined
-  socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
+  socket.broadcast.emit('newMessage',generateMessage('Admin ','New User Joined'));
   // socket.emit('newEmail',{
   //   from:'mahadevan_k@hcl.com',
   //   text:'Hi This is mahadevan',
@@ -43,12 +43,12 @@ io.on('connection',(socket)=>{
     console.log('createMessage',message);
     //will emit every to every single connectin
     io.emit('newMessage',generateMessage(message.from, message.text));
-    callback('This is from Server');
+    callback();
     //broadcast where every one will get message there are two arg first is event name and second one is object
   });
 
 socket.on('createLocMesg',(coords)=>{
-  io.emit('newLocationMessage',generateLocationMessage('Admin', coords.latitude, coords.longitude));
+  io.emit('newLocationMessage',generateLocationMessage('Admin ', coords.latitude, coords.longitude));
 })
 
 });
