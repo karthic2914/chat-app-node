@@ -33,6 +33,14 @@ a{
   width:84%;
 }
 
+
 .list-user{
   color:white
+}
+
+h4{
+  display: inline-block;
+}
+span{
+  color:lightgrey;
 }
