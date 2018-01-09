@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const express = require('express');
 //socket io
 const socketIO = require('socket.io');
-const {generateMessage} = require('./utils/message' );
+const {generateMessage,generateLocationMessage} = require('./utils/message' );
 
 const app = express();
 app.use(express.static(publicPath));
@@ -45,15 +45,11 @@ io.on('connection',(socket)=>{
     io.emit('newMessage',generateMessage(message.from, message.text));
     callback('This is from Server');
     //broadcast where every one will get message there are two arg first is event name and second one is object
-
-    // socket.broadcast.emit('newMessage',{
-    //      from:message.from,
-    //      text:message.text,
-    //      createdAt: new Date().getTime()
-    // })
   });
 
-
+socket.on('createLocMesg',(coords)=>{
+  io.emit('newLocationMessage',generateLocationMessage('Admin', coords.latitude, coords.longitude));
+})
 
 });
 
