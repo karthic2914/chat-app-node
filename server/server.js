@@ -1,21 +1,27 @@
 const path = require('path');
 const http = require('http');
-const publicPath = path.join(__dirname,'../public');
-const port = process.env.PORT || 3000;
-
 //call express
 const express = require('express');
 //socket io
 const socketIO = require('socket.io');
-const {generateMessage,generateLocationMessage} = require('./utils/message' );
 
 const app = express();
-app.use(express.static(publicPath));
 
+const {generateMessage,generateLocationMessage} = require('./utils/message' );
+const {isRealString} = require('./utils/validations');
+const {Users} = require('./utils/users');
+
+const publicPath = path.join(__dirname,'../public');
+
+const port = process.env.PORT || 3000;
 //use http
 const server = http.createServer(app);
 //use io
 const io = socketIO(server);
+//user
+const users = new Users();
+
+app.use(express.static(publicPath));
 
 //on method is register the an event listener using arrow fuction (Call back)
 io.on('connection',(socket)=>{
@@ -26,19 +32,22 @@ io.on('connection',(socket)=>{
   socket.on('disconnect', () =>{
     console.log('Disconnected from Client');
   });
-  //socket.emit is  single connection
-  socket.emit('newMessage',generateMessage('Admin ','Welcome to Chat App'));
-  //socket.broadcast.emit from admin text new user joined
-  socket.broadcast.emit('newMessage',generateMessage('Admin ','New User Joined'));
-  // socket.emit('newEmail',{
-  //   from:'mahadevan_k@hcl.com',
-  //   text:'Hi This is mahadevan',
-  //   createAt:123
-  // });
 
-  // socket.on('createEmail', (newEmail)=>{
-  //   console.log('createEmail', newEmail);
-  // });
+socket.on('join',(params, callback) =>{
+    if(!isRealString(params.name) || !isRealString(params.room)){
+      callback('Name and room name are required');
+    }
+    socket.join(params.room);
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, params.room);
+
+    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    socket.emit('newMessage',generateMessage('Admin ','Welcome to Chat App'));
+    socket.broadcast.emit('newMessage',generateMessage('Admin ',`${params.name} has joined.`));
+    callback();
+  });
+
+
   socket.on('createMessage', (message , callback)=>{
     console.log('createMessage',message);
     //will emit every to every single connectin
@@ -49,7 +58,15 @@ io.on('connection',(socket)=>{
 
 socket.on('createLocMesg',(coords)=>{
   io.emit('newLocationMessage',generateLocationMessage('Admin ', coords.latitude, coords.longitude));
-})
+});
+socket.on('disconnect', () => {
+  var user = users.removeUser(socket.id);
+
+  if (user) {
+    io.to(user.room).emit('updateUserList', users.getUserList(user.room));
+    io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
+  }
+});
 
 });
 

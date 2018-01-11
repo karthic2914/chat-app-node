@@ -1,83 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Chat </title>
-<!--  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">-->
-
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Open+Sans+Condensed:700" rel="stylesheet">
-</head>
-<body>
-  <div  class="rightbg">
-      <div class="container-fluid">
-          <div class="row">
-              <div>
-                  <div class="col-sm-10">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <ol id="messages">
-                        </ol>
-                      </div>
-                    </div>
-                    <div class="row form-cl" >
-                      <div class="col-xs-12">
-                        <div class="row">
-                        <form action="" id="message-form">
-                          <div class="form-group">
-                            <div class="col-xs-10 col-xs-10">
-                              <input type="text" name="message" class="form-control input-normal" value="" placeholder="Enter Message" autofocus autocomplete="off">
-                            </div>
-                            <div class="col-xs-2 pull-left">
-                              <button type="submit" name="button" class="btn btn-primary">Send</button>
-                              <button type="button" name="button" id="send-locate" class="btn btn-primary">Send location</button>
-                            </div>
-                          </div>
-                        </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-2 leftbg">
-                        <p class="list-user">List of User</p>
-                  </div>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Join | Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale, user-scalable = no">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Open+Sans+Condensed:700" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container center_div">
+        <div class="center_div__form">
+          <form action="/chat.html">
+              <div class="form-field">
+                <h3>Join a Chat</h3>
               </div>
-          </div>
-          <!--  .row -->
-      </div>
-      <!--  .container-fluid -->
-  </div>
-  <!--template-->
-  <script id="message-template" type="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p>{{text}}</p>
-        </div>
-      </li>
-  </script>
-  <script id="location-message-template" type="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p><a href="{{url}}" target="_blank">My Current Location</a></p>
-        </div>
-      </li>
-  </script>
-<script src="/socket.io/socket.io.js" charset="utf-8"></script>
-<script src="/js/jquery-3.2.1.min.js" charset="utf-8"></script>
-<script src="/js/moment.js" charset="utf-8"></script>
-<script src="/js/mustache.js" charset="utf-8"></script>
-<script src="/js/index.js" charset="utf-8"></script>
+              <div class="form-field">
+                <input type="text" name="name" placeholder="Display Name" class="form-control" autofocus>
+              </div><br>
+              <div class="form-field">
+                <input type="text" name="room" placeholder="Room Name" class="form-control">
+              </div><br>
+              <div class="form-field">
+                <button type="submit" class="btn btn-primary" name="button">Join !</button>
+              </div>
+          </form>
 
-</body>
+        </div>
+
+    </div>
+  </body>
 </html>
